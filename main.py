@@ -18,16 +18,17 @@ client = OpenAI()  # api_keyは環境変数から自動取得
 app = FastAPI()
 from fastapi.middleware.cors import CORSMiddleware
 
-app = FastAPI()
-
-# 追加: CORS設定
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],  # フロントのURL（本番時は本番URLも追加）
+    allow_origins=[
+        "http://localhost:5173",
+        "https://takuma-jr.vercel.app"
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 # 全国基準値の読み込み
 baseline_df = pd.read_csv("national_baseline.csv")
 baseline_df["age"] = baseline_df["age"].astype(int)
