@@ -148,12 +148,12 @@ def predict_growth(data: PhysicalInput):
             if k in ["age", "gender"]:
                 continue
             if k == "run50m":
-                target[k] = v * 0.92  # タイムは減らす
+                target[k] = v * 0.92
             else:
-                target[k] = v * 1.08  # 回数や距離は増やす
+                target[k] = v * 1.08
 
-        # 3ヶ月間の成長を直線的に予測
-        months = [1, 2, 3]
+        # 3ヶ月間の成長を直線的に予測（現状値も含めて返す）
+        months = [0, 1, 2, 3]  # 0ヶ月目=現状
         growth = {}
         for key in target.keys():
             start = getattr(data, key)
@@ -163,7 +163,7 @@ def predict_growth(data: PhysicalInput):
         return {
             "start": {k: getattr(data, k) for k in target.keys()},
             "target": {k: round(v, 2) for k, v in target.items()},
-            "growth_prediction": growth
+            "growth_prediction": growth  # 各項目ごとに[現状, 1ヶ月後, 2ヶ月後, 3ヶ月後(目標)]
         }
     except Exception as e:
         import traceback
