@@ -22,7 +22,9 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://localhost:5173",
-        "https://takuma-jr.vercel.app"
+        "https://takuma-jr.vercel.app",
+        "https://takumajr-api-production.up.railway.app",  # 追加
+        "http://takumajr-api-production.up.railway.app"     # httpも念のため追加
     ],
     allow_credentials=True,
     allow_methods=["*"],
